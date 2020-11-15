@@ -27,7 +27,11 @@ const mockGetCount = getCount as jest.Mock
 const mockGetById = getById as jest.Mock
 const mockGetAll = getAll as jest.Mock
 
-const { res, next, clearMockRes } = getMockRes()
+const { res, next, clearMockRes } = getMockRes({
+  locals: {
+    premium: true,
+  },
+})
 
 describe('user controller', () => {
   beforeEach(() => {
@@ -110,7 +114,7 @@ describe('user controller', () => {
 
   describe('getAll', () => {
     test('will respond with the users from the user service', async () => {
-      const req = getMockReq()
+      const req = getMockReq({ user: mockUser })
       // mock the service
       mockGetAll.mockResolvedValue([mockUser, mockUser2])
 
@@ -125,7 +129,7 @@ describe('user controller', () => {
     })
 
     test('will handle an error', async () => {
-      const req = getMockReq()
+      const req = getMockReq({ user: mockUser })
       // mock the service
       const mockError = new Error()
       mockGetAll.mockImplementationOnce(() => {
@@ -136,6 +140,33 @@ describe('user controller', () => {
 
       expect(mockGetAll).toBeCalledTimes(1)
       expect(next).toBeCalledWith(mockError)
+    })
+
+    test('will ensure the locals middleware has been called', async () => {
+      const { res: emptyRes, next } = getMockRes()
+      const req = getMockReq()
+      // mock the service
+      mockGetAll.mockResolvedValue([mockUser, mockUser2])
+
+      await userController.getAll(req, emptyRes, next)
+
+      expect(mockGetAll).not.toHaveBeenCalled()
+      expect(res.json).not.toHaveBeenCalled()
+
+      expect(next).toHaveBeenCalledWith(new Error('Need to be a premium user to access all Users'))
+    })
+
+    test('will ensure the request middleware has been called', async () => {
+      const req = getMockReq()
+      // mock the service
+      mockGetAll.mockResolvedValue([mockUser, mockUser2])
+
+      await userController.getAll(req, res, next)
+
+      expect(mockGetAll).not.toHaveBeenCalled()
+      expect(res.json).not.toHaveBeenCalled()
+
+      expect(next).toHaveBeenCalledWith(new Error('Need to be logged in to access all Users'))
     })
   })
 })

@@ -3,6 +3,7 @@ import { getMockReq, getMockRes } from '@jest-mock/express'
 
 // Domain Models
 import Job, { Grade } from '../models/Job'
+import User from '../models/User'
 
 // Services
 import { getCount, getById, getAll } from '../services/jobService'
@@ -13,13 +14,23 @@ import * as jobController from './jobController'
 const mockJob = new Job({ id: '12345', title: 'Mock Job', grade: Grade.D04 })
 const mockJob2 = new Job({ id: '67890', title: 'Second Mock Job', grade: Grade.B02 })
 
+const mockUser = new User({
+  id: 'abcdef',
+  forename: 'James',
+  surname: 'Smith',
+})
+
 // mock the job service
 jest.mock('../services/jobService')
 const mockGetCount = getCount as jest.Mock
 const mockGetById = getById as jest.Mock
 const mockGetAll = getAll as jest.Mock
 
-const { res, next, clearMockRes } = getMockRes()
+const { res, next, clearMockRes } = getMockRes({
+  locals: {
+    premium: true,
+  },
+})
 
 describe('job controller', () => {
   beforeEach(() => {
@@ -31,7 +42,7 @@ describe('job controller', () => {
   })
 
   describe('getCount', () => {
-    test('will return the count fro the job service', async () => {
+    test('will return the count from the job service', async () => {
       const req = getMockReq()
       // mock the service
       mockGetCount.mockResolvedValue(20)
@@ -103,7 +114,7 @@ describe('job controller', () => {
 
   describe('getAll', () => {
     test('will respond with the jobs from the job service', async () => {
-      const req = getMockReq()
+      const req = getMockReq({ user: mockUser })
       // mock the service
       mockGetAll.mockResolvedValue([mockJob, mockJob2])
 
@@ -118,7 +129,7 @@ describe('job controller', () => {
     })
 
     test('will handle an error', async () => {
-      const req = getMockReq()
+      const req = getMockReq({ user: mockUser })
       // mock the service
       const mockError = new Error()
       mockGetAll.mockImplementationOnce(() => {
@@ -129,6 +140,33 @@ describe('job controller', () => {
 
       expect(mockGetAll).toBeCalledTimes(1)
       expect(next).toBeCalledWith(mockError)
+    })
+
+    test('will ensure the locals middleware has been called', async () => {
+      const { res: emptyRes, next } = getMockRes()
+      const req = getMockReq()
+      // mock the service
+      mockGetAll.mockResolvedValue([mockJob, mockJob2])
+
+      await jobController.getAll(req, emptyRes, next)
+
+      expect(mockGetAll).not.toHaveBeenCalled()
+      expect(res.json).not.toHaveBeenCalled()
+
+      expect(next).toHaveBeenCalledWith(new Error('Need to be a premium user to access all Jobs'))
+    })
+
+    test('will ensure the request middleware has been called', async () => {
+      const req = getMockReq()
+      // mock the service
+      mockGetAll.mockResolvedValue([mockJob, mockJob2])
+
+      await jobController.getAll(req, res, next)
+
+      expect(mockGetAll).not.toHaveBeenCalled()
+      expect(res.json).not.toHaveBeenCalled()
+
+      expect(next).toHaveBeenCalledWith(new Error('Need to be logged in to access all Jobs'))
     })
   })
 })
