@@ -2,12 +2,11 @@
 import { getMockReq, getMockRes } from '@jest-mock/express'
 
 // Tested Module
-import authMiddleware from './authMiddleware'
-
+import localsMiddleware from './localsMiddleware'
 
 const { res, next, clearMockRes } = getMockRes()
 
-describe('auth middleware', () => {
+describe('locals middleware', () => {
   beforeEach(() => {
     clearMockRes()
   })
@@ -15,11 +14,13 @@ describe('auth middleware', () => {
   test('adds the token to locals object', () => {
     const req = getMockReq()
 
-    authMiddleware(req, res, next)
+    localsMiddleware(req, res, next)
 
-    expect(res.locals).toEqual(expect.objectContaining({
-      token: expect.stringContaining('token')
-    }))
+    expect(res.locals).toEqual(
+      expect.objectContaining({
+        premium: true,
+      }),
+    )
     expect(next).toBeCalledWith()
   })
 })
