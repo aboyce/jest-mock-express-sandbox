@@ -38,5 +38,5 @@ app.all('*', (req, res, next) => {
 })
 
 app.listen(port, async () => {
-  log.info(`server v${version} started at http://localhost:${port}`)
+  log.info(`server v${version} started at http://localhost:${port}/api/`)
 })
