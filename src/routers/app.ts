@@ -6,8 +6,8 @@ import jobRouter from './jobRouter'
 import userRouter from './userRouter'
 
 // Middleware
-import loggerMiddleware from '../middleware/logger'
-import errorMiddleware from '../middleware/error'
+import loggerMiddleware from '../middleware/loggerMiddleware'
+import errorMiddleware from '../middleware/errorMiddleware'
 
 const appRouter = express.Router()
 

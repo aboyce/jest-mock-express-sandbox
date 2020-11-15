@@ -2,7 +2,7 @@
 import { getMockReq, getMockRes } from '@jest-mock/express'
 
 // Tested Module
-import loggerMiddleware from './logger'
+import loggerMiddleware from './loggerMiddleware'
 
 // mock the logger helper
 jest.mock('../helpers/logger', () => ({
