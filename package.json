@@ -1,0 +1,41 @@
+{
+  "name": "jest-mock-express-sandbox",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bikk-uk/jest-mock-express-sandbox.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "winston": "^3.2.1"
+  },
+  "scripts": {
+    "watch": "tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
+    "start": "node .",
+    "build": "tsc",
+    "clean": "rm -rf dist/*",
+    "test": "jest --coverage",
+    "test-watch": "jest --watchAll",
+    "lint": "tsc --noEmit && eslint '*/**/*.{js,ts}' --quiet --fix"
+  },
+  "devDependencies": {
+    "@jest-mock/express": "^1.1.9",
+    "@types/cors": "^2.8.8",
+    "@types/express": "^4.17.1",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.7",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.1.2",
+    "ts-jest": "^26.4.4",
+    "tsc-watch": "^4.2.9",
+    "typescript": "^4.0.5"
+  }
+}
