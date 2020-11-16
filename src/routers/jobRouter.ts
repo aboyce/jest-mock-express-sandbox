@@ -10,6 +10,8 @@ router.get('/count', jobController.getCount)
 
 router.get('/all', jobController.getAll)
 
+router.get('/all/premium', jobController.getAllPremium)
+
 router.get('/one/:id', jobController.get)
 
 export default router

@@ -36,10 +36,20 @@ export const get = async (req: AuthenticatedRequest, res: Response, next: NextFu
 
 export const getAll = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
+    const users = await userService.getAll()
+    res.json({ message: 'User results.', users: users })
+  } catch (error) {
+    return next(error)
+  }
+  next()
+}
+
+export const getAllPremium = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  try {
     if (!res.locals.premium) throw new Error('Need to be a premium user to access all Users')
     if (!req.user) throw new Error('Need to be logged in to access all Users')
     const users = await userService.getAll()
-    res.json({ message: 'User results.', users: users })
+    res.json({ message: 'User results.', premium: res.locals.premium, users: users })
   } catch (error) {
     return next(error)
   }

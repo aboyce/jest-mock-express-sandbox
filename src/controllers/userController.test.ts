@@ -114,7 +114,7 @@ describe('user controller', () => {
 
   describe('getAll', () => {
     test('will respond with the users from the user service', async () => {
-      const req = getMockReq({ user: mockUser })
+      const req = getMockReq()
       // mock the service
       mockGetAll.mockResolvedValue([mockUser, mockUser2])
 
@@ -129,7 +129,7 @@ describe('user controller', () => {
     })
 
     test('will handle an error', async () => {
-      const req = getMockReq({ user: mockUser })
+      const req = getMockReq()
       // mock the service
       const mockError = new Error()
       mockGetAll.mockImplementationOnce(() => {
@@ -141,14 +141,46 @@ describe('user controller', () => {
       expect(mockGetAll).toBeCalledTimes(1)
       expect(next).toBeCalledWith(mockError)
     })
+  })
 
-    test('will ensure the locals middleware has been called', async () => {
+  describe('getAllPremium', () => {
+    test('will respond with the users from the user service', async () => {
+      const req = getMockReq({ user: mockUser })
+      // mock the service
+      mockGetAll.mockResolvedValue([mockUser, mockUser2])
+
+      await userController.getAllPremium(req, res, next)
+
+      expect(mockGetAll).toHaveBeenCalledWith()
+      expect(res.json).toHaveBeenCalledWith({
+        message: expect.any(String),
+        users: [mockUser, mockUser2],
+        premium: true,
+      })
+      expect(next).toHaveBeenCalledWith()
+    })
+
+    test('will handle an error', async () => {
+      const req = getMockReq({ user: mockUser })
+      // mock the service
+      const mockError = new Error()
+      mockGetAll.mockImplementation(() => {
+        throw mockError
+      })
+
+      await userController.getAllPremium(req, res, next)
+
+      expect(mockGetAll).toBeCalledTimes(1)
+      expect(next).toBeCalledWith(mockError)
+    })
+
+    test('ensures the locals premium has been provided', async () => {
       const { res: emptyRes, next } = getMockRes()
       const req = getMockReq()
       // mock the service
       mockGetAll.mockResolvedValue([mockUser, mockUser2])
 
-      await userController.getAll(req, emptyRes, next)
+      await userController.getAllPremium(req, emptyRes, next)
 
       expect(mockGetAll).not.toHaveBeenCalled()
       expect(res.json).not.toHaveBeenCalled()
@@ -156,12 +188,12 @@ describe('user controller', () => {
       expect(next).toHaveBeenCalledWith(new Error('Need to be a premium user to access all Users'))
     })
 
-    test('will ensure the request middleware has been called', async () => {
+    test('ensures the req user has been provided', async () => {
       const req = getMockReq()
       // mock the service
       mockGetAll.mockResolvedValue([mockUser, mockUser2])
 
-      await userController.getAll(req, res, next)
+      await userController.getAllPremium(req, res, next)
 
       expect(mockGetAll).not.toHaveBeenCalled()
       expect(res.json).not.toHaveBeenCalled()
