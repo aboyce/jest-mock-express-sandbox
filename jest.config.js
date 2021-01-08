@@ -2,6 +2,7 @@
 const tsPreset = require('ts-jest/jest-preset')
 
 const ignorePatterns = [
+  '<rootDir>/node_modules',
   '<rootDir>/dist',
   '<rootDir>/src/models',
   '<rootDir>/src/helpers',
