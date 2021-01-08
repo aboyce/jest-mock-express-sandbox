@@ -20,7 +20,7 @@ export const getRequestingUser = async (
   try {
     if (!req.user) {
       log.error('Need to be logged in to access profile')
-      res.status(404).end()
+      res.status(500).end()
       return
     }
     res.json({ message: 'User profile.', user: req.user })
