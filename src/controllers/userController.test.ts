@@ -27,6 +27,13 @@ const mockGetCount = getCount as jest.Mock
 const mockGetById = getById as jest.Mock
 const mockGetAll = getAll as jest.Mock
 
+// mock the logger
+jest.mock('../helpers/logger', () => ({
+  controllerLogger: jest.fn().mockReturnValue({
+    error: jest.fn(),
+  }),
+}))
+
 const { res, next, clearMockRes } = getMockRes({
   locals: {
     premium: true,
@@ -40,6 +47,30 @@ describe('user controller', () => {
     mockGetCount.mockClear()
     mockGetById.mockClear()
     mockGetAll.mockClear()
+  })
+
+  describe('getRequestingUser', () => {
+    test('ensures the req user is returned', async () => {
+      const req = getMockReq({ user: mockUser })
+
+      await userController.getRequestingUser(req, res, next)
+
+      expect(res.json).toHaveBeenCalledWith({
+        message: expect.any(String),
+        user: mockUser,
+      })
+      expect(next).toHaveBeenCalledWith()
+    })
+
+    test('ensures the req user has been provided', async () => {
+      const req = getMockReq()
+
+      await userController.getRequestingUser(req, res, next)
+
+      expect(res.status).toBeCalledWith(500)
+      expect(res.end).toBeCalledWith()
+      expect(next).not.toBeCalled()
+    })
   })
 
   describe('getCount', () => {
