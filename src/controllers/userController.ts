@@ -12,6 +12,24 @@ import AuthenticatedRequest from '../types/AuthenticatedRequest'
 
 const log = controllerLogger('user')
 
+export const getRequestingUser = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    if (!req.user) {
+      log.error('Need to be logged in to access profile')
+      res.status(404).end()
+      return
+    }
+    res.json({ message: 'User profile.', user: req.user })
+  } catch (error) {
+    return next(error)
+  }
+  next()
+}
+
 export const getCount = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     const count = await userService.getCount()
