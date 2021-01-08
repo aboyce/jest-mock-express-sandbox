@@ -1,5 +1,5 @@
 // Libraries
-import winston, { Logger, transports, format } from 'winston'
+import { Logger, transports, format, createLogger } from 'winston'
 
 enum LogFileTypes {
   App = 'APP',
@@ -18,7 +18,7 @@ const customFormat = format.printf(({ timestamp, fileType, name, level, message 
   return `${timestamp} [${fileDetails}] ${level} : ${message}`
 })
 
-const logger = winston.createLogger({
+const logger = createLogger({
   level: 'verbose',
   format: format.combine(format.timestamp(), format.colorize(), customFormat),
   transports: [new transports.Console()],
