@@ -9,6 +9,7 @@ import { controllerLogger } from '../helpers/logger'
 
 // Types
 import AuthenticatedRequest from '../types/AuthenticatedRequest'
+import LocalsResponse from 'src/types/LocalsResponse'
 
 const log = controllerLogger('job')
 
@@ -44,7 +45,11 @@ export const getAll = async (req: AuthenticatedRequest, res: Response, next: Nex
   next()
 }
 
-export const getAllPremium = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+export const getAllPremium = async (
+  req: AuthenticatedRequest,
+  res: LocalsResponse,
+  next: NextFunction,
+): Promise<void> => {
   try {
     if (!res.locals.premium) throw new Error('Need to be a premium user to access all Jobs')
     if (!req.user) throw new Error('Need to be logged in to access all Jobs')

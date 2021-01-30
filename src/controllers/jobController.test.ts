@@ -8,6 +8,10 @@ import User from '../models/User'
 // Services
 import { getCount, getById, getAll } from '../services/jobService'
 
+// Types
+import type LocalsResponse from '../types/LocalsResponse'
+import type AuthenticatedRequest from '../types/AuthenticatedRequest'
+
 // Tested Module
 import * as jobController from './jobController'
 
@@ -26,7 +30,7 @@ const mockGetCount = getCount as jest.Mock
 const mockGetById = getById as jest.Mock
 const mockGetAll = getAll as jest.Mock
 
-const { res, next, clearMockRes } = getMockRes({
+const { res, next, clearMockRes } = getMockRes<LocalsResponse>({
   locals: {
     premium: true,
   },
@@ -189,7 +193,7 @@ describe('job controller', () => {
     })
 
     test('ensures the req user has been provided', async () => {
-      const req = getMockReq()
+      const req = getMockReq<AuthenticatedRequest>()
       // mock the service
       mockGetAll.mockResolvedValue([mockJob, mockJob2])
 
