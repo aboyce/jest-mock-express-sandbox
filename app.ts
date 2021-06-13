@@ -1,6 +1,5 @@
 // Libraries
 import express from 'express'
-import bodyParser from 'body-parser'
 
 // Routers
 import appRouter from './src/routers/app'
@@ -16,7 +15,7 @@ const port = 4444
 
 const log = appLogger()
 
-app.use(bodyParser.json())
+app.use(express.json())
 
 app.get('/api', (req, res, next) => {
   res.json({

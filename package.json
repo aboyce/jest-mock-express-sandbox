@@ -8,7 +8,6 @@
     "url": "https://github.com/bikk-uk/jest-mock-express-sandbox.git"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "winston": "^3.2.1"
   },
@@ -24,18 +23,18 @@
   "devDependencies": {
     "@jest-mock/express": "^1.4.2",
     "@types/cors": "^2.8.10",
-    "@types/express": "^4.17.11",
-    "@types/jest": "^26.0.22",
-    "@types/node": "^14.14.37",
-    "@typescript-eslint/eslint-plugin": "^4.20.0",
-    "@typescript-eslint/parser": "^4.20.0",
-    "eslint": "^7.23.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "@types/express": "^4.17.12",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.2",
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
+    "eslint": "^7.28.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "jest": "^26.6.3",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.1",
     "ts-jest": "^26.5.4",
-    "tsc-watch": "^4.2.9",
-    "typescript": "^4.2.3"
+    "tsc-watch": "^4.4.0",
+    "typescript": "^4.3.2"
   }
 }
