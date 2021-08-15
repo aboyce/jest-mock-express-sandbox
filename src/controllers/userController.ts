@@ -12,6 +12,16 @@ import AuthenticatedRequest from '../types/AuthenticatedRequest'
 
 const log = controllerLogger('user')
 
+export const isUserLoggedIn = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
+  if (!req.user) {
+    log.error('User is not logged in')
+    res.status(401).send()
+    return
+  }
+  res.json({ message: 'User is logged in', user: req.user })
+  next()
+}
+
 export const getRequestingUser = async (
   req: AuthenticatedRequest,
   res: Response,

@@ -6,6 +6,8 @@ import * as userController from '../controllers/userController'
 
 const router = express.Router()
 
+router.get('/logged-in', userController.isUserLoggedIn)
+
 router.get('/profile', userController.getRequestingUser)
 
 router.get('/count', userController.getCount)

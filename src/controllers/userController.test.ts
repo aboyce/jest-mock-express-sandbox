@@ -49,6 +49,36 @@ describe('user controller', () => {
     mockGetAll.mockClear()
   })
 
+  describe('isUserLoggedIn', () => {
+    test('detects if the user is logged in', async () => {
+      const req = getMockReq({ user: mockUser })
+
+      await userController.isUserLoggedIn(req, res, next)
+
+      expect(res.status).not.toBeCalled()
+      expect(res.send).not.toBeCalled()
+
+      expect(res.json).toBeCalledWith({
+        message: expect.any(String),
+        user: mockUser,
+      })
+    })
+
+    test('detects if the user is not logged in', async () => {
+      const req = getMockReq({ user: null })
+
+      await userController.isUserLoggedIn(req, res, next)
+
+      expect(res.status).toBeCalledTimes(1)
+      expect(res.status).toBeCalledWith(401)
+
+      expect(res.send).toBeCalledTimes(1)
+      expect(res.send).toBeCalledWith()
+
+      expect(res.json).not.toBeCalled()
+    })
+  })
+
   describe('getRequestingUser', () => {
     test('ensures the req user is returned', async () => {
       const req = getMockReq({ user: mockUser })
