@@ -340,10 +340,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
-"@jest-mock/express@^1.4.3":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@jest-mock/express/-/express-1.4.3.tgz#2849cbc82365d3bacf542f8ee58d5455d5478852"
-  integrity sha512-qf7BGFl0T+o1/PuBWaLjRp0fZIbuZOE/VHX6oBAez8gvYZzRmJAwafD9QBSOFQccLczn2d2SdMTzWFFUSTQ0lg==
+"@jest-mock/express@^1.4.4":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@jest-mock/express/-/express-1.4.4.tgz#6ed07ee6ba497b0a02cf2ff747b1761f5df4abe1"
+  integrity sha512-rRhPvH0TEnWzskAtuKXd3J6MNisv7nu0UUj0hCGQU0O9YKBGJhxOjI947YDKnFePIzh882NCSgsG3Q8rMizQiw==
 
 "@jest/console@^26.6.2":
   version "26.6.2"
