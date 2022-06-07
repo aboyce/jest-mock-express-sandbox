@@ -392,10 +392,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
-"@jest-mock/express@2.0.0-beta-1":
-  version "2.0.0-beta-1"
-  resolved "https://registry.yarnpkg.com/@jest-mock/express/-/express-2.0.0-beta-1.tgz#76c091f044ae3c219c67fe25d6bb7dfc68cde18a"
-  integrity sha512-K+nuB1Q8qH22xdiPwXZaVL6ZM40orw0/04QECCmJKp/1+imiyAsUqsC/O+x9gaddgatYFQCEf/8AhBOBmFLh/g==
+"@jest-mock/express@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@jest-mock/express/-/express-2.0.0.tgz#2de9acdc7f2f51d95b1cff34bd13e2aeeef3f0a3"
+  integrity sha512-8nBAHPkwH6aU6POBNK/M8ny4M28HykvlV6fhmmhidhOsZps24zbKq3dyJi1CiZ7NyyQfN3XpZP+OJoo5ZTtaUQ==
 
 "@jest/console@^28.1.1":
   version "28.1.1"
